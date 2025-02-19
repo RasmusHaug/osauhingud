@@ -1,0 +1,86 @@
+* {
+  color: white;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* || GENERAL STYLES */
+html,
+body {
+  min-height: 100vh;
+  background: #475569;
+  background: -moz-linear-gradient(top, #1E293B 0%, #6083BC 100%);
+  background: -webkit-linear-gradient(top, #1E293B 0%, #6083BC 100%);
+  background: linear-gradient(to bottom, #1E293B 0%, #6083BC 100%);
+}
+
+/* || NAVIGATION MENU */
+/* General navigation bar rules. */
+.navigation-bar {
+  width: 100%;
+  height: 100%;
+  background: #1a2333;
+  padding: 20px;
+}
+/* Container for holding <div> and <nav> elements. */
+.nav-flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  /* Navigation logo hover effects */
+  & :hover {
+    color: cyan; 
+  }
+  /* Navigation logo active (clicked on) effects. */
+  & :active {
+    color: #00b3b3; 
+  }
+}
+
+/* Rules for the logo element, left of the menu. */
+.nav-flex-container > div > a{
+  text-decoration: none;
+  color: white;
+}
+/* Rules for the navigation container link elements. */
+.nav-flex-container nav > a {
+  text-decoration: none;
+  background-color: #26344bb2;
+
+  padding: 15px 25px;
+  margin-inline: 20px;
+
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  color: white;
+}
+/* Rules for the navigation container link elements when hovered. */
+.nav-flex-container nav > a :hover {
+  text-decoration: none;
+  background-color: #2b4268b2;
+  color: cyan;
+}
+
+/* || BASE BODY WRAPPER */
+/* Index .mp4 video height. */
+/* Set to always be 40% of view height, This is the wrapper div class. */
+.content-default-video {
+  height: 40vh;
+  position: relative;
+  /* Same as above but this is for the video specifically.*/
+  & video {
+    height: 40vh;
+    object-fit: cover;
+  }
+  /* Same as above but this is for the black overlay with text on top of it. */
+  & div {
+    height: 40vh;
+    display: flex;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+}

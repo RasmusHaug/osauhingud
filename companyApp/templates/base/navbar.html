@@ -1,0 +1,16 @@
+<div class="navigation-bar">
+    <div class="nav-flex-container">
+        {% if request.path != '/' %}
+        <div>
+            <a href="{% url 'index' %}" class="nav-flex-container-logo">
+                <h1>Avaleht</h1>
+            </a>
+        </div>
+        {% endif %}
+        {% comment %} TODO: Temporary navigation menu {% endcomment %}
+        <nav>
+            <a href="{% url 'company-data' %}">Osaühingu Andmed</a>
+            <a href="{% url 'company-creation' %}">Osaühingu Asutamine</a>
+        </nav>
+    </div>
+</div>
