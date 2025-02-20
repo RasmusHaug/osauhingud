@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+{% block title %}OÜ. andmed{% endblock title %}
+
+{% block content %}
+    <h2>{{ company.name }} ({{ company.registration_code }})</h2>
+    <p>Asutatud: {{ company.date_of_establishment }}</p>
+    <p>Kogukapital: {{ company.total_capital }} EUR</p>
+
+    <h3>Osanikud</h3>
+    <ul>
+        {% for shareholder in shareholders %}
+            <li>
+                {{ shareholder.name }} ({{ shareholder.registry_code_or_id }}) - 
+                {{ shareholder.share_size }} EUR {% if shareholder.is_founder %} (Founder) {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'index' %}">Tagasi AVALEHELE</a>
+{% endblock content %}

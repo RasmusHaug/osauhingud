@@ -4,6 +4,21 @@
 
 {% block content %}
 
-    <h1> Helllloooooo </h1>
+    <div class="">
+        <form method="GET">
+            <input type="text" name="q" placeholder="Otsi osaühinguid või osanike" value="{{ query }}">
+            <button type="submit">Otsi</button>
+        </form>
+
+        <ul>
+            {% for company in companies %}
+                <li>
+                    <a href="{% url 'company_data' company.id %}">{{ company.name }} ({{ company.registration_code }})</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'company_creation' %}">Lisa uus Osaühing</a>
+    </div>
 
 {% endblock content %}

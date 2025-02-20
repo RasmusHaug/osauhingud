@@ -1,0 +1,44 @@
+{% extends "base/base.html" %}
+{% block title %}OÜ. loomine{% endblock title %}
+
+{% block content %}
+
+    <a href="{% url 'index' %}">Tagasi AVALEHELE</a>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for field in company_form %}
+            <div>
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div style="color: red;">
+                        {% for error in field.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        
+        <h1>TERE</h1>
+
+        {% for field in shareholder_formset %}
+            <div>
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div style="color: red;">
+                        {% for error in field.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Save</button>
+    </form>
+
+{% endblock content %}
