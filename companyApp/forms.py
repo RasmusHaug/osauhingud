@@ -58,4 +58,4 @@ class ShareholderForm(forms.ModelForm):
             },
         }
 
-ShareholderFormSet = inlineformset_factory(Company, Shareholder, form=ShareholderForm, extra=1)
+ShareholderFormSet = inlineformset_factory(Company, Shareholder, form=ShareholderForm, extra=1, can_delete=False)
