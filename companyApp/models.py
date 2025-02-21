@@ -43,7 +43,7 @@ class Company(models.Model):
     
 
 class Shareholder(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='osanik')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='shareholders')
     shareholder_type = models.CharField(max_length=10, choices=SHAREHOLDER_TYPE)
     name = models.CharField(max_length=255)
     registry_code_or_id = models.CharField(max_length=20)
