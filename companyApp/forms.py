@@ -1,13 +1,17 @@
 from django import forms
 from django.forms import inlineformset_factory
-
-from .models import Company
-from .models import Shareholder
+from .models import Company, Shareholder
 
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = ['name', 'registration_code', 'date_of_establishment', 'total_capital']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Sisesta nimi'}),
+            'registration_code': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Osaühingu Registrikood'}),
+            'date_of_establishment': forms.DateInput(attrs={'class': 'form-input', 'type': 'date'}),
+            'total_capital': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Minimaalselt 2500€'}),
+        }
         labels = {
             'name': 'Osaühingu nimi',
             'registration_code': 'Registrikood',
@@ -26,7 +30,7 @@ class CompanyForm(forms.ModelForm):
             },
             'date_of_establishment': {
                 'required': 'Sisesta Osaühingu asutamise kuupäev.',
-                'invalid': 'Osaühingu asutamise kuupäev pole korrektses formaadis: YYYY-MM-DD',
+                'invalid': 'Osaühingu asutamise kuupäev pole korrektses formaadis: DD-MM-YYYY',
             },
             'total_capital': {
                 'required': 'Osaühingu kogukapital peab olema lisatud',
@@ -38,6 +42,13 @@ class ShareholderForm(forms.ModelForm):
     class Meta:
         model = Shareholder
         fields = ['shareholder_type', 'name', 'registry_code_or_id', 'share_size', 'is_founder']
+        widgets = {
+            'shareholder_type': forms.Select(attrs={'class': 'form-input'}),
+            'name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Osaniku nimi'}),
+            'registry_code_or_id': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Firma Registrikood või Isiku ID'}),
+            'share_size': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Osaniku osa suurus (€)'}),
+            'is_founder': forms.CheckboxInput(attrs={'class': 'form-checkbox'}),
+        }
         labels = {
             'shareholder_type': 'Osaniku tüüp',
             'name': 'Osaniku nimi',
