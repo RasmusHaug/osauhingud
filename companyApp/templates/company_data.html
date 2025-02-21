@@ -1,20 +1,41 @@
 {% extends "base/base.html" %}
-{% block title %}OÜ. andmed{% endblock title %}
+{% block title %}{{company.name}} OÜ{% endblock title %}
 
 {% block content %}
-    <h2>{{ company.name }} ({{ company.registration_code }})</h2>
-    <p>Asutatud: {{ company.date_of_establishment }}</p>
-    <p>Kogukapital: {{ company.total_capital }} EUR</p>
 
-    <h3>Osanikud</h3>
-    <ul>
-        {% for shareholder in shareholders %}
-            <li>
-                {{ shareholder.name }} ({{ shareholder.registry_code_or_id }}) - 
-                {{ shareholder.share_size }} EUR {% if shareholder.is_founder %} (Founder) {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+<div class="container">
+    <div>
+        <h1>{{ company.name }}</h1>
+        <p><strong>Registrikood:</strong> {{ company.registration_code }}</p>
+        <p><strong>Asutamise kuupäev:</strong> {{ company.date_of_establishment }}</p>
+        <p><strong>Kogukapital:</strong> €{{ company.total_capital }}</p>
+    </div>
 
-    <a href="{% url 'index' %}">Tagasi AVALEHELE</a>
+    <div>
+        <h2>Osanikud</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Osaniku Nimi</th>
+                    <th>Osaniku Suurus</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for shareholder in shareholders %}
+                    <tr>
+                        <td class="company-link">{{shareholder.name}}</td>
+                        <td>{{shareholder.share_size}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Button to Add a Shareholder -->
+    <a href="{% url 'add_shareholder' company.id %}" class="btn btn-primary">Add Shareholder</a>
+
+    <!-- Back to Homepage -->
+    <a href="{% url 'index' %}" class="btn btn-secondary">Back to Home</a>
+</div>
+
 {% endblock content %}

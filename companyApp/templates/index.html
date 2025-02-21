@@ -4,21 +4,36 @@
 
 {% block content %}
 
-    <div class="">
-        <form method="GET">
-            <input type="text" name="q" placeholder="Otsi osaühinguid või osanike" value="{{ query }}">
-            <button type="submit">Otsi</button>
+    <div class="container">
+        <h1>Otsi Osaühingut</h1>
+
+        <form method="GET" class="form">
+            <input type="text" name="q" class="search-input" placeholder="Otsi osaühinguid või osanike" value="{{ query }}">
+            <button type="submit" class="input-button">Otsi</button>
         </form>
+        {% if companies %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Osaühingu nimi</th>
+                        <th>Registrikood</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for company in companies %}
+                        <tr>
+                            <td><a href="{% url 'company_data' company.id %}" class="company-link">{{ company.name }}</a></td>
+                            <td>{{ company.registration_code }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-results">Osaühingut ei leitud.</p>
+        {% endif %}
 
-        <ul>
-            {% for company in companies %}
-                <li>
-                    <a href="{% url 'company_data' company.id %}">{{ company.name }} ({{ company.registration_code }})</a>
-                </li>
-            {% endfor %}
-        </ul>
+        <a class="input-button-secondary" href="{% url 'company_creation' %}">Lisa uus Osaühing</a>
 
-        <a href="{% url 'company_creation' %}">Lisa uus Osaühing</a>
     </div>
 
 {% endblock content %}

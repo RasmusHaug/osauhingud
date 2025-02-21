@@ -3,42 +3,19 @@
 
 {% block content %}
 
-    <a href="{% url 'index' %}">Tagasi AVALEHELE</a>
-
-    <form method="POST">
-        {% csrf_token %}
-
-        {% for field in company_form %}
-            <div>
-                <label>{{ field.label }}</label>
-                {{ field }}
-                {% if field.errors %}
-                    <div style="color: red;">
-                        {% for error in field.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-        {% endfor %}
+    <div class="container">
+        <h1>Lisa uus Osaühing</h1>
         
-        <h1>TERE</h1>
-
-        {% for field in shareholder_formset %}
-            <div>
-                <label>{{ field.label }}</label>
-                {{ field }}
-                {% if field.errors %}
-                    <div style="color: red;">
-                        {% for error in field.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+        <form method="POST" class="form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ company_form.as_p }}
             </div>
-        {% endfor %}
 
-        <button type="submit">Save</button>
-    </form>
+            <button type="submit" class="input-button">Salvesta</button>
+        </form>
+
+        <a href="{% url 'index' %}" class="input-button-secondary">Tagasi Avalehele</a>
+    </div>
 
 {% endblock content %}
