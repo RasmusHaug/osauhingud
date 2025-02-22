@@ -1,33 +1,63 @@
 {% extends "base/base.html" %}
-{% block title %}OÜ. loomine{% endblock title %}
+{% block title %}OÜ loomine{% endblock title %}
 
 {% block content %}
-
     <div class="container">
         <form method="POST" class="form">
             {% csrf_token %}
-            <div>
-                <h1>Lisa uus Osaühing</h1>
-                <div class="form-group">
-                    {{ company_form.as_p }}
-                </div>
-            </div>
-            <div>
-                <h1>Lisa Asutajad</h1>
-                <div class="form-group">
-                    {{ shareholder_form.management_form }}
-                    {% for form in shareholder_form %}
-                        <div class="shareholder-form">
-                            {{ form.as_p }}
-                        </div>
-                    {% endfor %}
-                </div>
+            
+            <h1>Lisa uus Osaühing</h1>
+            <div class="form-group">
+                {{ company_form.as_p }}
             </div>
 
+            <h1>Lisa Asutajad</h1>
+            <div id="shareholder-forms">
+                {{ shareholder_formset.management_form }}
+                {% for form in shareholder_formset %}
+                    <div class="shareholder-form">
+                        <div class="sub-container">
+                            {{ form.as_p }}
+                            <button type="button" class="remove-shareholder input-button-secondary">Eemalda</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="button" id="add-shareholder" class="input-button">Lisa Asutaja</button>
+            <button type="submit" class="input-button">Salvesta</button>
         </form>
 
-        <button type="submit" class="input-button">Salvesta</button>
         <a href="{% url 'index' %}" class="input-button-secondary">Tagasi Avalehele</a>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const formContainer = document.getElementById("shareholder-forms");
+            const addButton = document.getElementById("add-shareholder");
+            const totalForms = document.getElementById("id_form-TOTAL_FORMS");
+
+            addButton.addEventListener("click", function () {
+                let formNum = Number(totalForms.value);
+                let newForm = document.querySelectorAll(".shareholder-form")[0].cloneNode(true);
+
+                newForm.innerHTML = newForm.innerHTML.replace(/-\d+-/g, `-${formNum}-`);
+                newForm.querySelector("input").value = "";
+                newForm.querySelector(".remove-shareholder").addEventListener("click", function () {
+                    this.parentElement.remove();
+                    totalForms.value = Number(totalForms.value) - 1;
+                });
+
+                formContainer.appendChild(newForm);
+                totalForms.value = formNum + 1;
+            });
+
+            document.querySelectorAll(".remove-shareholder").forEach(button => {
+                button.addEventListener("click", function () {
+                    this.parentElement.remove();
+                    totalForms.value = Number(totalForms.value) - 1;
+                });
+            });
+        });
+    </script>
 {% endblock content %}
