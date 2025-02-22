@@ -25,10 +25,10 @@ def companyData(request, company_id):
 
 def addCompany(request):
     if request.method == 'POST':
-        companyForm = CompanyForm(request.POST)
+        company_form = CompanyForm(request.POST)
 
-        if companyForm.is_valid():
-            company = companyForm.save()
+        if company_form.is_valid():
+            company = company_form.save()
             return redirect('company_data', company_id=company.id)
 
     else:

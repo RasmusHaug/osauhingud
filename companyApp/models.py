@@ -5,8 +5,8 @@ from django.utils.timezone import now
 # Create your models here.
 
 SHAREHOLDER_TYPE = [
-    ("NATURAL", "füüsiline"),
-    ("LEGAL", "juriidiline isik")
+    ("FÜÜSILINE", "füüsiline"),
+    ("JURIIDILINE", "juriidiline")
 ]
 
 class Company(models.Model):
@@ -44,7 +44,7 @@ class Company(models.Model):
 
 class Shareholder(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='shareholders')
-    shareholder_type = models.CharField(max_length=10, choices=SHAREHOLDER_TYPE)
+    shareholder_type = models.CharField(max_length=16, choices=SHAREHOLDER_TYPE)
     name = models.CharField(max_length=255)
     registry_code_or_id = models.CharField(max_length=20)
     share_size = models.PositiveIntegerField(validators=[MinValueValidator(1)])

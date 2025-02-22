@@ -8,9 +8,10 @@
         <h1>Otsi Osaühingut</h1>
 
         <form method="GET" class="form">
-            <input type="text" name="q" class="search-input" placeholder="Otsi osaühinguid või osanike" value="{{ query }}">
+            <input type="text" name="q" class="search-input" placeholder="Otsi osaühinguid nime või registrikoodi alusel." value="{{ query }}">
             <button type="submit" class="input-button">Otsi</button>
         </form>
+
         {% if companies %}
             <table class="table">
                 <thead>

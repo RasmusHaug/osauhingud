@@ -27,6 +27,13 @@ body {
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
 }
 
+.sub-container {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 4px solid #ff9933;
+  border-radius: 2px;
+}
+
 /* FORMS */
 .form {
   display: flex;
@@ -122,6 +129,7 @@ body {
 
 /* BUTTONS */
 .input-button {
+  width: 100%;
   padding: 12px;
   font-size: 16px;
   font-weight: bold;

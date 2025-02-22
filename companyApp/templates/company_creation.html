@@ -4,17 +4,29 @@
 {% block content %}
 
     <div class="container">
-        <h1>Lisa uus Osaühing</h1>
-        
         <form method="POST" class="form">
             {% csrf_token %}
-            <div class="form-group">
-                {{ company_form.as_p }}
+            <div>
+                <h1>Lisa uus Osaühing</h1>
+                <div class="form-group">
+                    {{ company_form.as_p }}
+                </div>
+            </div>
+            <div>
+                <h1>Lisa Asutajad</h1>
+                <div class="form-group">
+                    {{ shareholder_form.management_form }}
+                    {% for form in shareholder_form %}
+                        <div class="shareholder-form">
+                            {{ form.as_p }}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
 
-            <button type="submit" class="input-button">Salvesta</button>
         </form>
 
+        <button type="submit" class="input-button">Salvesta</button>
         <a href="{% url 'index' %}" class="input-button-secondary">Tagasi Avalehele</a>
     </div>
 

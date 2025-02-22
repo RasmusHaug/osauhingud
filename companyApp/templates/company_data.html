@@ -11,31 +11,36 @@
         <p><strong>Kogukapital:</strong> €{{ company.total_capital }}</p>
     </div>
 
-    <div>
+    <div class="sub-container">
         <h2>Osanikud</h2>
-        <table>
+        <table class="table">
             <thead>
                 <tr>
+                    <th>Osaniku Tüüp</th>
                     <th>Osaniku Nimi</th>
+                    <th>Osaniku Registrikood või ID number</th>
                     <th>Osaniku Suurus</th>
+                    <th>Asutaja</th>
                 </tr>
             </thead>
             <tbody>
                 {% for shareholder in shareholders %}
                     <tr>
-                        <td class="company-link">{{shareholder.name}}</td>
+                        <td>{{shareholder.shareholder_type}}</td>
+                        <td>{{shareholder.name}}</td>
+                        <td>{{shareholder.registry_code_or_id}}</td>
                         <td>{{shareholder.share_size}}</td>
+                        {% comment %} TODO: Currently shows as "True " or "False". Change this to "Jah", "Ei" or even checkmarks. {% endcomment %}
+                        <td>{{shareholder.is_founder}}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    
+    <a href="{% url 'add_shareholder' company.id %}" class="input-button">Lisa Uus Osanik</a>
 
-    <!-- Button to Add a Shareholder -->
-    <a href="{% url 'add_shareholder' company.id %}" class="btn btn-primary">Add Shareholder</a>
-
-    <!-- Back to Homepage -->
-    <a href="{% url 'index' %}" class="btn btn-secondary">Back to Home</a>
+    <a href="{% url 'index' %}" class="input-button-secondary">Tagasi Avalehele</a>
 </div>
 
 {% endblock content %}
