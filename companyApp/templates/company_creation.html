@@ -25,6 +25,11 @@
 
 
             <h1>Lisa Asutajad</h1>
+            <div id="search-div" class="sub-container">
+                <input type="text" id="shareholder-search" class="form-input" placeholder="Otsi osanikku või ettevõtet...">
+                <div id="search-results" class="form-search"></div>
+            </div>
+
             <div id="shareholder-forms">
                 {{ shareholder_formset.management_form }}
                 {% for form in shareholder_formset %}
@@ -43,13 +48,12 @@
                                     {% endif %}
                                 </div>
                             {% endfor %}
-                            <button type="button" class="remove-shareholder input-button-secondary">Eemalda</button>
                         </div>
                     </div>
                 {% endfor %}
             </div>
 
-            <button type="button" id="add-shareholder" class="input-button-secondary">Lisa UUS Asutaja</button>
+            <button type="button" id="add-shareholder" class="input-button-secondary">Lisa UUS Asutaja Vorm</button>
             <button type="submit" class="input-button">Salvesta Osaühing ja Osanikud</button>
             {% if error_msg %}
                 <div class="error">
@@ -67,27 +71,55 @@
             const addButton = document.getElementById("add-shareholder");
             const totalForms = document.getElementById("id_form-TOTAL_FORMS");
 
-            addButton.addEventListener("click", function () {
+            const searchDiv = document.getElementById("search-div");
+            const searchInput = document.getElementById("shareholder-search");
+            const searchResultsDiv = document.getElementById("search-results");
+
+            searchInput.addEventListener("input", function () {
+                const query = searchInput.value.trim();
+                if (query.length > 2) {
+                    fetch(`/search-shareholders/?q=${query}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            searchResultsDiv.innerHTML = "";
+
+                            data.results.forEach(item => {
+                                const resultElement = document.createElement('p');
+                                resultElement.classList.add('search-result');
+                                resultElement.textContent = `${item.name} (${item.registry_code_or_id})`;
+                                resultElement.addEventListener('click', function () {
+                                    const formIndex = Number(totalForms.value) - 1;
+                                    document.getElementById(`id_form-${formIndex}-shareholder_type`).value = item.shareholder_status;
+                                    document.getElementById(`id_form-${formIndex}-name`).value = item.name;
+                                    document.getElementById(`id_form-${formIndex}-registry_code_or_id`).value = item.registry_code_or_id;
+
+                                    searchResultsDiv.innerHTML = "";
+                                    searchInput.value = "";
+                                    addNewEmptyForm();
+                                });
+                                searchResultsDiv.appendChild(resultElement);
+                            });
+                        });
+                } else {
+                    searchResultsDiv.innerHTML = "";
+                }
+            });
+
+            addButton.addEventListener("click", function() {
+                addNewEmptyForm();
+            })
+
+            function addNewEmptyForm() {
                 let formNum = Number(totalForms.value);
                 let newForm = document.querySelectorAll(".shareholder-form")[0].cloneNode(true);
 
+                newForm.querySelectorAll("input").forEach(input => input.value = "");
+                
                 newForm.innerHTML = newForm.innerHTML.replace(/-\d+-/g, `-${formNum}-`);
-                newForm.querySelector("input").value = "";
-                newForm.querySelector(".remove-shareholder").addEventListener("click", function () {
-                    this.parentElement.remove();
-                    totalForms.value = Number(totalForms.value) - 1;
-                });
-
                 formContainer.appendChild(newForm);
-                totalForms.value = formNum + 1;
-            });
 
-            document.querySelectorAll(".remove-shareholder").forEach(button => {
-                button.addEventListener("click", function () {
-                    this.parentElement.remove();
-                    totalForms.value = Number(totalForms.value) - 1;
-                });
-            });
+                totalForms.value = formNum + 1;
+            }
         });
     </script>
 {% endblock content %}

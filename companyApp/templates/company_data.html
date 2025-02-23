@@ -8,7 +8,7 @@
         <h1>{{ company.name }}</h1>
         <p><strong>Registrikood:</strong> {{ company.registration_code }}</p>
         <p><strong>Asutamise kuupäev:</strong> {{ company.date_of_establishment|date:"d.m.Y" }}</p>
-        <p><strong>Kogukapital:</strong> €{{ company.total_capital }}</p>
+        <p><strong>Kogukapital:</strong> {{ company.total_capital }} €</p>
     </div>
 
     <div class="sub-container">
@@ -18,7 +18,7 @@
                 <tr>
                     <th>Osaniku Tüüp</th>
                     <th>Osaniku Nimi</th>
-                    <th>Osaniku Registrikood või ID number</th>
+                    <th>Osaniku Registrikood või Isikukood</th>
                     <th>Osaniku Suurus</th>
                     <th>Asutaja</th>
                 </tr>

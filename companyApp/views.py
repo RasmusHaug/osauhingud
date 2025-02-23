@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.forms import formset_factory
+from django.http import JsonResponse
 
-from .models import Company
+from .models import Company, Shareholder
 from .forms import CompanyForm, ShareholderForm
 
 def index(request):
@@ -61,3 +62,31 @@ def addCompany(request):
         'company_form': company_form,
         'shareholder_formset': shareholder_form_set
     })
+
+def search_shareholders(request):
+    query = request.GET.get('q', '').strip()
+    if query:
+        shareholders = Shareholder.objects.filter(
+            Q(name__icontains=query) | Q(registry_code_or_id__icontains=query)
+        ).distinct('registry_code_or_id')
+        companies = Company.objects.filter(
+            Q(name__icontains=query) | Q(registration_code__icontains=query)
+        ).distinct('registration_code')
+
+        results = []
+        for shareholder in shareholders:
+            results.append({
+                'name': shareholder.name,
+                'registry_code_or_id': shareholder.registry_code_or_id,
+                'shareholder_status': "FÜÜSILINE",
+            })
+
+        for company in companies:
+            results.append({
+                'name': company.name,
+                'registry_code_or_id': company.registration_code,
+                'shareholder_status': "JURIIDILINE",
+            })
+
+        return JsonResponse({'results': results})
+    return JsonResponse({'results': []})
