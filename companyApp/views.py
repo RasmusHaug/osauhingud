@@ -45,7 +45,7 @@ def addCompany(request):
 
             if total_share_capital != company.total_capital:
                 company.delete()
-                error_msg = "Kogukapital peab olema võrdne osanike kapitali summaga."
+                error_msg = "Kogukapital peab olema võrdne osanike kapitali summaga"
                 return render(request, 'company_creation.html', {
                     'company_form': company_form,
                     'shareholder_formset': shareholder_form_set,
