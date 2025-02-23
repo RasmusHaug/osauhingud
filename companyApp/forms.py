@@ -47,7 +47,7 @@ class ShareholderForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Osaniku nimi'}),
             'registry_code_or_id': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Firma Registrikood või Isiku ID'}),
             'share_size': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Osaniku osa suurus (€)'}),
-            'shareholder_status': forms.CheckboxInput(attrs={'class': 'form-input'}),
+            'shareholder_status': forms.Select(attrs={'class': 'form-input'}),
         }
         labels = {
             'shareholder_type': 'Osaniku tüüp',
