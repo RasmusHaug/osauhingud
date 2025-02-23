@@ -8,25 +8,27 @@
             
             <h1>Lisa uus Osaühing</h1>
             <div class="form-group">
-                {% for field in company_form %}
-                    <div class="form-field">
-                        {{ field.label_tag }}
-                        {{ field }}
-                        {% if field.errors %}
-                            <div class="error">
-                                {% for error in field.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+                <div class="sub-container">
+                    {% for field in company_form %}
+                        <div class="form-field">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="error">
+                                    {% for error in field.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
 
 
             <h1>Lisa Asutajad</h1>
             <div id="search-div" class="sub-container">
-                <input type="text" id="shareholder-search" class="form-input" placeholder="Otsi osanikku või ettevõtet...">
+                <input type="text" id="shareholder-search" class="form-input" placeholder="Otsi olemasolevaid osanikke või ettevõtteid...">
                 <div id="search-results" class="form-search"></div>
             </div>
 
@@ -35,6 +37,11 @@
                 {% for form in shareholder_formset %}
                     <div class="shareholder-form">
                         <div class="sub-container">
+                            
+                            <div class="delete-button" onclick="deleteForm(this)">
+                                &times;
+                            </div>
+
                             {% for field in form %}
                                 <div class="form-field">
                                     {{ field.label_tag }}
@@ -53,8 +60,8 @@
                 {% endfor %}
             </div>
 
-            <button type="button" id="add-shareholder" class="input-button-secondary">Lisa UUS Asutaja Vorm</button>
-            <button type="submit" class="input-button">Salvesta Osaühing ja Osanikud</button>
+            <button type="button" id="add-shareholder" class="input-button-secondary">Lisa uus asutaja vorm</button>
+            <button type="submit" class="input-button">Salvesta osaühing ja osanikud</button>
             {% if error_msg %}
                 <div class="error">
                     <p>{{ error_msg }}</p>
@@ -75,6 +82,19 @@
             const searchInput = document.getElementById("shareholder-search");
             const searchResultsDiv = document.getElementById("search-results");
 
+            const setInitialShareholderStatus = () => {
+                const currentFormCount = Number(totalForms.value);
+
+                if (currentFormCount === 1) {
+                    document.getElementById(`id_form-0-shareholder_status`).value = "ASUTAJA";
+                } else {
+                    for (let i = 0; i < currentFormCount; i++) {
+                        document.getElementById(`id_form-${i}-shareholder_status`).value = "ÜKS_ASUTAJATEST";
+                    }
+                }
+            };
+            setInitialShareholderStatus();
+
             searchInput.addEventListener("input", function () {
                 const query = searchInput.value.trim();
                 if (query.length > 2) {
@@ -87,15 +107,32 @@
                                 const resultElement = document.createElement('p');
                                 resultElement.classList.add('search-result');
                                 resultElement.textContent = `${item.name} (${item.registry_code_or_id})`;
+
                                 resultElement.addEventListener('click', function () {
-                                    const formIndex = Number(totalForms.value) - 1;
-                                    document.getElementById(`id_form-${formIndex}-shareholder_type`).value = item.shareholder_status;
-                                    document.getElementById(`id_form-${formIndex}-name`).value = item.name;
-                                    document.getElementById(`id_form-${formIndex}-registry_code_or_id`).value = item.registry_code_or_id;
+                                    let formFilled = false;
+
+                                    for (let i=0; i<totalForms.value; i++) {
+                                        const nameField = document.getElementById(`id_form-${i}-name`);
+                                        if (!nameField.value) {
+                                            document.getElementById(`id_form-${i}-shareholder_type`).value = item.shareholder_status;
+                                            nameField.value = item.name;
+                                            document.getElementById(`id_form-${i}-registry_code_or_id`).value = item.registry_code_or_id;
+                                            formFilled = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!formFilled) {
+                                        addNewEmptyForm();
+                                        const formIndex = Number(totalForms.value) - 1;
+                                        document.getElementById(`id_form-${formIndex}-shareholder_type`).value = item.shareholder_status;
+                                        document.getElementById(`id_form-${formIndex}-name`).value = item.name;
+                                        document.getElementById(`id_form-${formIndex}-registry_code_or_id`).value = item.registry_code_or_id;
+                                    }
 
                                     searchResultsDiv.innerHTML = "";
                                     searchInput.value = "";
-                                    addNewEmptyForm();
+                                    setInitialShareholderStatus();
                                 });
                                 searchResultsDiv.appendChild(resultElement);
                             });
@@ -119,6 +156,21 @@
                 formContainer.appendChild(newForm);
 
                 totalForms.value = formNum + 1;
+                setInitialShareholderStatus();
+            }
+
+            window.deleteForm = function(button) {
+                const form = button.closest('.shareholder-form');
+                const totalForms = document.getElementById("id_form-TOTAL_FORMS");
+
+                const formCount = document.querySelectorAll('.shareholder-form').length;
+
+                if (formCount > 1) {
+                    form.remove();
+                    totalForms.value = formCount - 1;
+
+                    setInitialShareholderStatus();
+                }
             }
         });
     </script>
