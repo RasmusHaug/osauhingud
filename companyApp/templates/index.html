@@ -18,13 +18,29 @@
                     <tr>
                         <th>Osaühingu nimi</th>
                         <th>Registrikood</th>
+                        <th>Osanikud</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for company in companies %}
                         <tr>
-                            <td><a href="{% url 'company_data' company.id %}" class="company-link">{{ company.name }}</a></td>
+                            <td>
+                                <a href="{% url 'company_data' company.id %}" class="company-link">
+                                    {{ company.name }}
+                                </a>
+                            </td>
                             <td>{{ company.registration_code }}</td>
+                            <td>
+                                {% with company.shareholders.all as shareholders %}
+                                    {% if shareholders %}
+                                        {% for shareholder in shareholders %}
+                                            {{ shareholder.name }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <em>Pole osanikke</em>
+                                    {% endif %}
+                                {% endwith %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -32,6 +48,7 @@
         {% else %}
             <p class="no-results">Osaühingut ei leitud.</p>
         {% endif %}
+
 
         <a class="input-button-secondary" href="{% url 'company_creation' %}">Lisa uus Osaühing</a>
 
