@@ -7,7 +7,7 @@
     <div>
         <h1>{{ company.name }}</h1>
         <p><strong>Registrikood:</strong> {{ company.registration_code }}</p>
-        <p><strong>Asutamise kuupäev:</strong> {{ company.date_of_establishment }}</p>
+        <p><strong>Asutamise kuupäev:</strong> {{ company.date_of_establishment|date:"d.m.Y" }}</p>
         <p><strong>Kogukapital:</strong> €{{ company.total_capital }}</p>
     </div>
 
@@ -30,16 +30,13 @@
                         <td>{{shareholder.name}}</td>
                         <td>{{shareholder.registry_code_or_id}}</td>
                         <td>{{shareholder.share_size}}</td>
-                        {% comment %} TODO: Currently shows as "True " or "False". Change this to "Jah", "Ei" or even checkmarks. {% endcomment %}
-                        <td>{{shareholder.is_founder}}</td>
+                        <td>{{shareholder.shareholder_status}}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
     
-    <a href="{% url 'add_shareholder' company.id %}" class="input-button">Lisa Uus Osanik</a>
-
     <a href="{% url 'index' %}" class="input-button-secondary">Tagasi Avalehele</a>
 </div>
 

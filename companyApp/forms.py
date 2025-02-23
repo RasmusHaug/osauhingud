@@ -41,20 +41,20 @@ class CompanyForm(forms.ModelForm):
 class ShareholderForm(forms.ModelForm):
     class Meta:
         model = Shareholder
-        fields = ['shareholder_type', 'name', 'registry_code_or_id', 'share_size', 'is_founder']
+        fields = ['shareholder_type', 'name', 'registry_code_or_id', 'share_size', 'shareholder_status']
         widgets = {
             'shareholder_type': forms.Select(attrs={'class': 'form-input'}),
             'name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Osaniku nimi'}),
             'registry_code_or_id': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Firma Registrikood või Isiku ID'}),
             'share_size': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Osaniku osa suurus (€)'}),
-            'is_founder': forms.CheckboxInput(attrs={'class': 'form-checkbox'}),
+            'shareholder_status': forms.CheckboxInput(attrs={'class': 'form-input'}),
         }
         labels = {
             'shareholder_type': 'Osaniku tüüp',
             'name': 'Osaniku nimi',
             'registry_code_or_id': 'Registrikood või ID number',
             'share_size': 'Osaniku osa suurus (€)',
-            'is_founder': 'Asutaja',
+            'shareholder_status': 'Osaniku staatus',
         }
         error_messages = {
             'name': {

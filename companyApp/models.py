@@ -5,16 +5,22 @@ from django.utils.timezone import now
 # Create your models here.
 
 SHAREHOLDER_TYPE = [
-    ("FÜÜSILINE", "füüsiline"),
-    ("JURIIDILINE", "juriidiline")
+    ("FÜÜSILINE", "füüsiline isik"),
+    ("JURIIDILINE", "juriidiline isik")
 ]
+
+SHAREHOLDER_STATUS = {
+    ("ASUTAJA", "asutaja"),
+    ("ÜKS_ASUTAJATEST", "üks asutajatests"),
+    ("OSANIK", "osanik"),
+}
 
 class Company(models.Model):
     name = models.CharField(
         max_length=100, 
         validators=[
             RegexValidator(
-                regex=r'^[a-zA-Z0-9]{3,100}$',
+                regex=r'^[\w\s\\p{P}]{3,100}$',
                 message="Firma nimi peab olema 3 kuni 100 tähemärki ja koosnema tähtedest ja numbritest."
             )
         ]
@@ -48,7 +54,7 @@ class Shareholder(models.Model):
     name = models.CharField(max_length=255)
     registry_code_or_id = models.CharField(max_length=20)
     share_size = models.PositiveIntegerField(validators=[MinValueValidator(1)])
-    is_founder = models.BooleanField(default=True)
+    shareholder_status = models.CharField(max_length=16, choices=SHAREHOLDER_STATUS)
 
     def __str__(self):
         return f"{self.name} - {self.share_size} EUR"

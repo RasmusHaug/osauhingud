@@ -199,8 +199,9 @@ tr:hover {
 }
 
 /* ERROR MESSAGES */
-.error {
-  color: #ff4d4d;
+.error, .error p {
+  color: red;
   font-size: 14px;
-  margin-top: -5px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
