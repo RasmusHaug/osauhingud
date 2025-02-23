@@ -20,16 +20,16 @@ class CompanyForm(forms.ModelForm):
         }
         error_messages = {
             'name': {
-                'required': 'Osaühingu nimi peab olema täidetud.',
-                'max_length': 'Osaühingu nimi ei saa olla suurem kui 100 tähemärki.',
-                'min_length': 'Osaühingu nimi peab olema vähemalt 3 tähemärki.',
+                'required': 'Osaühingu nimi peab olema täidetud',
+                'max_length': 'Osaühingu nimi ei saa olla suurem kui 100 tähemärki',
+                'min_length': 'Osaühingu nimi peab olema vähemalt 3 tähemärki',
             },
             'registration_code': {
-                'required': 'Osaühingu registrikood peab olema täiedud.',
-                'invalid': 'Osaühingu registrikood on valesti sisestatud.',
+                'required': 'Osaühingu registrikood peab olema täiedud',
+                'invalid': 'Osaühingu registrikood on valesti sisestatud',
             },
             'date_of_establishment': {
-                'required': 'Sisesta Osaühingu asutamise kuupäev.',
+                'required': 'Sisesta Osaühingu asutamise kuupäev',
                 'invalid': 'Osaühingu asutamise kuupäev pole korrektses formaadis: DD-MM-YYYY',
             },
             'total_capital': {
@@ -45,20 +45,20 @@ class ShareholderForm(forms.ModelForm):
         widgets = {
             'shareholder_type': forms.Select(attrs={'class': 'form-input'}),
             'name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Osaniku nimi'}),
-            'registry_code_or_id': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Firma Registrikood või Isiku ID'}),
+            'registry_code_or_id': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Registri- või isikukood'}),
             'share_size': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Osaniku osa suurus (€)'}),
             'shareholder_status': forms.Select(attrs={'class': 'form-input'}),
         }
         labels = {
             'shareholder_type': 'Osaniku tüüp',
             'name': 'Osaniku nimi',
-            'registry_code_or_id': 'Registrikood või ID number',
+            'registry_code_or_id': 'Registrikood või isikukood',
             'share_size': 'Osaniku osa suurus (€)',
             'shareholder_status': 'Osaniku staatus',
         }
         error_messages = {
             'name': {
-                'required': 'Osaniku nimi peab olema täidetud.',
+                'required': 'Osaniku nimi peab olema täidetud',
             },
             'registry_code_or_id': {
                 'required': 'Osaniku registrikood (firma puhul) või ID number (füüsilise isiku puhul) peab olema lisatud',
