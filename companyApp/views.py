@@ -11,7 +11,10 @@ def index(request):
 
     if query:
         companies = Company.objects.filter(
-            Q(name__icontains=query) | Q(registration_code__icontains=query)
+            Q(name__icontains=query) 
+            | Q(registration_code__icontains=query)
+            | Q(shareholders__name__icontains=query)
+            | Q(shareholders__registry_code_or_id__icontains=query)
         ).distinct()
 
     return render(request, 'index.html', {'companies': companies, 'query': query})
@@ -36,7 +39,6 @@ def addCompany(request):
                 if form.cleaned_data.get('name'):
                     shareholder = form.save(commit=False)
                     shareholder.company = company
-                    shareholder.is_founder = True
                     shareholder.save()
                     total_share_capital += shareholder.share_size
 
@@ -59,19 +61,3 @@ def addCompany(request):
         'company_form': company_form,
         'shareholder_formset': shareholder_form_set
     })
-
-def addShareholder(request, company_id):
-    company = get_object_or_404(Company, id=company_id)
-
-    if request.method == 'POST':
-        shareholder_form = ShareholderForm(request.POST)
-        if shareholder_form.is_valid():
-            shareholder = shareholder_form.save(commit=False)
-            shareholder.company = company
-            shareholder.save()
-            return redirect('company_data', company_id=company.id)
-
-    else:
-        shareholder_form = ShareholderForm()
-
-    return render(request, 'add_shareholder.html', {'shareholder_form': shareholder_form, 'company': company})

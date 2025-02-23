@@ -8,8 +8,21 @@
             
             <h1>Lisa uus Osaühing</h1>
             <div class="form-group">
-                {{ company_form.as_p }}
+                {% for field in company_form %}
+                    <div class="form-field">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error">
+                                {% for error in field.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
+
 
             <h1>Lisa Asutajad</h1>
             <div id="shareholder-forms">
@@ -17,15 +30,32 @@
                 {% for form in shareholder_formset %}
                     <div class="shareholder-form">
                         <div class="sub-container">
-                            {{ form.as_p }}
+                            {% for field in form %}
+                                <div class="form-field">
+                                    {{ field.label_tag }}
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <div class="error">
+                                            {% for error in field.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
                             <button type="button" class="remove-shareholder input-button-secondary">Eemalda</button>
                         </div>
                     </div>
                 {% endfor %}
             </div>
 
-            <button type="button" id="add-shareholder" class="input-button">Lisa Asutaja</button>
-            <button type="submit" class="input-button">Salvesta</button>
+            <button type="button" id="add-shareholder" class="input-button-secondary">Lisa UUS Asutaja</button>
+            <button type="submit" class="input-button">Salvesta Osaühing ja Osanikud</button>
+            {% if error_msg %}
+                <div class="error">
+                    <p>{{ error_msg }}</p>
+                </div>
+            {% endif %}
         </form>
 
         <a href="{% url 'index' %}" class="input-button-secondary">Tagasi Avalehele</a>
