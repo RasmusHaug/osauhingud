@@ -5,14 +5,14 @@ from django.utils.timezone import now
 # Create your models here.
 
 SHAREHOLDER_TYPE = [
-    ("FÜÜSILINE", "füüsiline isik"),
-    ("JURIIDILINE", "juriidiline isik")
+    ("FÜÜSILINE", "Füüsiline isik"),
+    ("JURIIDILINE", "Juriidiline isik")
 ]
 
 SHAREHOLDER_STATUS = {
-    ("ASUTAJA", "asutaja"),
-    ("ÜKS_ASUTAJATEST", "üks asutajatests"),
-    ("OSANIK", "osanik"),
+    ("ASUTAJA", "Asutaja"),
+    ("ÜKS_ASUTAJATEST", "Üks asutajatests"),
+    ("OSANIK", "Osanik"),
 }
 
 class Company(models.Model):
@@ -21,7 +21,7 @@ class Company(models.Model):
         validators=[
             RegexValidator(
                 regex=r'^[\w\s\\p{P}]{3,100}$',
-                message="Firma nimi peab olema 3 kuni 100 tähemärki ja koosnema tähtedest ja numbritest."
+                message="Firma nimi peab olema 3 kuni 100 tähemärki ning koosnema tähtedest ja numbritest"
             )
         ]
     )
@@ -30,7 +30,7 @@ class Company(models.Model):
         validators=[
             RegexValidator(
                 regex=r'^\d{7}$',
-                message="Registrikood peab olema täpselt 7 numbrit."
+                message="Registrikood peab olema täpselt 7 numbrit"
             )
         ]
     )
@@ -41,7 +41,7 @@ class Company(models.Model):
     )
     total_capital = models.PositiveIntegerField(
         validators=[MinValueValidator(2500)],
-        help_text="Kogukapitali suurus eurodes (vähemalt 2500)."
+        help_text="Kogukapitali suurus eurodes (vähemalt 2500)"
     )
     
     def __str__(self):
