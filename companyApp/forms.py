@@ -3,6 +3,21 @@ from django.forms import inlineformset_factory
 from .models import Company, Shareholder
 
 class CompanyForm(forms.ModelForm):
+    """
+    Form for creating and updating a Company.
+
+    Fields:
+        - name (TextInput): Name of the company.
+        - registration_code (TextInput): Unique registration code.
+        - date_of_establishment (DateInput): Date the company was established.
+        - total_capital (NumberInput): Minimum 2500€ capital.
+
+    Validations:
+        - Name must be between 3 and 100 characters.
+        - Registration code is required and must be valid.
+        - Establishment date must be in the correct format (DD-MM-YYYY).
+        - Capital must be at least 2500€.
+    """
     class Meta:
         model = Company
         fields = ['name', 'registration_code', 'date_of_establishment', 'total_capital']
@@ -39,6 +54,20 @@ class CompanyForm(forms.ModelForm):
         }
 
 class ShareholderForm(forms.ModelForm):
+    """
+    Form for adding shareholders to a company.
+
+    Fields:
+        - shareholder_type (Select): Determines if the shareholder is an individual or a company.
+        - name (TextInput): The name of the shareholder.
+        - registry_code_or_id (TextInput): The personal ID or company registration number.
+        - share_size (NumberInput): The shareholder's financial contribution.
+        - shareholder_status (Select): The status of the shareholder (e.g., "ASUTAJA", "ÜKS ASUTAJATEST").
+
+    Behavior:
+        - The first shareholder is set to "ASUTAJA" by default.
+        - Subsequent shareholders are labeled as "ÜKS ASUTAJATEST".
+    """
     class Meta:
         model = Shareholder
         fields = ['shareholder_type', 'name', 'registry_code_or_id', 'share_size', 'shareholder_status']

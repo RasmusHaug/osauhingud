@@ -16,6 +16,15 @@ SHAREHOLDER_STATUS = {
 }
 
 class Company(models.Model):
+    """
+    Represents a company entity.
+
+    Attributes:
+        name (str): The name of the company.
+        registration_code (str): A unique registration code for the company.
+        date_of_establishment (date): Date when the company was established.
+        total_capital (decimal): Total capital available for the company.
+    """
     name = models.CharField(
         max_length=100, 
         validators=[
@@ -49,6 +58,17 @@ class Company(models.Model):
     
 
 class Shareholder(models.Model):
+    """
+    Represents a shareholder of a copmany.
+
+    Attributes:
+        company (ForeignKey): The company this shareholder belongs to.
+        shareholder_type (str): The type of shareholder ('FÜÜSILINE' for individuals, 'JURIIDILINE' for companies).
+        name (str): The name of the shareholder.
+        registry_code_or_id (str): A unique Company registration code or Individual ID code.
+        share_size (integer): Shareholder share size for the company in euros.
+        shareholder_status (str): The status of the shareholder (e.g., "ASUTAJA", "ÜKS ASUTAJATEST").
+    """
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='shareholders')
     shareholder_type = models.CharField(max_length=16, choices=SHAREHOLDER_TYPE)
     name = models.CharField(max_length=255)
