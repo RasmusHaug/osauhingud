@@ -22,8 +22,6 @@
 
 ## Kirjeldus
 
-Katse lahendada RIK Python Arendaja koduülesanne.
-
 Veebileht on loodud kasutades [Django](https://www.djangoproject.com/) koos [PostgreSql](https://www.postgresql.org/) andmebaasiga.
 
 Veebileht lubab kasutajal osaühinguid __asutada__, __otsida__ ning __andmeid vaadata__.
@@ -269,6 +267,18 @@ Veebirakenduse saab jooksutada järgneva käsklusega:
 ```shell
 python .\manage.py runserver
 ```
+
+#### Andmebaasi automaatne täitmine
+Enne andmebaasi laadimist tuleb veenduda, et Django projekt jookseb.
+
+Andmebaasi näidis asub failis `exampleData.json` ning selle PostgreSQL andmebaasi laadimiseks tuleb jooksutada käsklus
+```powerShell
+python manage.py load_initial_data
+```
+
+Scripti jooksutades logib konsooli kas andmed said edukalt faili lisatud või mitte.
+
+Kui script lõpetab, jooksutades uuesti veebirakenduse peaksid andmebaasi andmed sisestatud olema.
 
 
 ## Veateated
