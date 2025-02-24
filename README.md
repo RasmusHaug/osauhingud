@@ -1,4 +1,25 @@
-# RIK Assignment
+# Sisukord
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+- [Sisukord](#sisukord)
+   * [Kirjeldus](#kirjeldus)
+      + [Failistruktuur](#failistruktuur)
+         - [config kaust](#config-kaust)
+         - [companyApp](#companyapp)
+      + [Avaleht](#avaleht)
+         - [Osaühingute tabel](#osaühingute-tabel)
+         - [Lisa Uus Osaühing](#lisa-uus-osaühing)
+      + [Osaühingu andmete vaade](#osaühingu-andmete-vaade)
+      + [Osaühingu asutamise vorm](#osaühingu-asutamise-vorm)
+         - [Lisa uus Osaühing](#lisa-uus-osaühing-1)
+         - [Lisa Asutajad](#lisa-asutajad)
+   * [Veebirakenduse tarkvara installeerimine](#veebirakenduse-tarkvara-installeerimine)
+      + [Projekti kloonimine](#projekti-kloonimine)
+      + [PostgreSQL installimine](#postgresql-installimine)
+      + [Pythoni installimine](#pythoni-installimine)
+      + [Venv keskkonna seadistamine](#venv-keskkonna-seadistamine)
+   * [Veebirakenduse jooksutamine](#veebirakenduse-jooksutamine)
+   * [Veateated](#veateated)
+<!-- TOC end -->
 
 ## Kirjeldus
 
@@ -238,7 +259,7 @@ POSTGRESQL_USER=postgres
 POSTGRESQL_PASSWORD=
 ```
 
-Ainult viimased 3 rida tuleb täita eelnevalt TODO: [PostgreSQL seadistamisel]() valitud seadetega. 
+Ainult viimased 3 rida tuleb täita eelnevalt [PostgreSQL seadistamisel]() valitud seadetega. 
 - `POSTGRESQL_NAME` - andmebaasi nimi, vaikimisi seadistatud **postgres**
 - `POSTGRESQL_USER` - andmebaasi kasutajanimi mis installeerides valisid
 - `POSTGRESQL_PASSWORD` - andmebaasi parool mis installeerides seadistasid.
