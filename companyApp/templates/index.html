@@ -12,6 +12,8 @@
             <button type="submit" class="input-button">Otsi</button>
         </form>
 
+        <a class="input-button-secondary" href="{% url 'company_creation' %}">Lisa uus Osaühing</a>
+
         {% if companies %}
             <table class="table">
                 <thead>
@@ -48,10 +50,6 @@
         {% else %}
             <p class="no-results">Osaühingut ei leitud.</p>
         {% endif %}
-
-
-        <a class="input-button-secondary" href="{% url 'company_creation' %}">Lisa uus Osaühing</a>
-
     </div>
 
 {% endblock content %}
