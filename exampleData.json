@@ -1,0 +1,159 @@
+[
+  {
+    "CompanyName": "OSAÜHING SADAMATE AUSTAJA",
+    "RegistrationCode": "1032130",
+    "DateOfEstablishment": "1997-11-10",
+    "TotalCapital": 6710,
+    "Shareholders": [
+      {
+        "Name": "Priit-Mikk Tamm",
+        "RegistryCodeOrID": "37607314711",
+        "ShareSize": 6710,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      }
+    ]
+  },
+  {
+    "CompanyName": "Liepaja OÜ",
+    "RegistrationCode": "1209271",
+    "DateOfEstablishment": "2011-05-02",
+    "TotalCapital": 2500,
+    "Shareholders": [
+      {
+        "Name": "Airo Port",
+        "RegistryCodeOrID": "38805210412",
+        "ShareSize": 2500,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      }
+    ]
+  },
+  {
+    "CompanyName": "Rykko OÜ",
+    "RegistrationCode": "1131122",
+    "DateOfEstablishment": "2007-02-20",
+    "TotalCapital": 2556,
+    "Shareholders": [
+      {
+        "Name": "Juhan Raikkonnen",
+        "RegistryCodeOrID": "39802170227",
+        "ShareSize": 2556,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      }
+    ]
+  },
+  {
+    "CompanyName": "Koffenator OÜ",
+    "RegistrationCode": "1614442",
+    "DateOfEstablishment": "2020-12-18",
+    "TotalCapital": 2500,
+    "Shareholders": [
+      {
+        "Name": "Karl Suur",
+        "RegistryCodeOrID": "36803200307",
+        "ShareSize": 2500,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      }
+    ]
+  },
+  {
+    "CompanyName": "OÜ Maalimajandus",
+    "RegistrationCode": "1141180",
+    "DateOfEstablishment": "2007-09-06",
+    "TotalCapital": 4000,
+    "Shareholders": [
+      {
+        "Name": "Mona-Lisa Pihlak",
+        "RegistryCodeOrID": "38103280028",
+        "ShareSize": 4000,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      }
+    ]
+  },
+  {
+    "CompanyName": "NanoTekt OÜ",
+    "RegistrationCode": "1224685",
+    "DateOfEstablishment": "2014-01-10",
+    "TotalCapital": 2500,
+    "Shareholders": [
+      {
+        "Name": "Toomas Kerjus",
+        "RegistryCodeOrID": "49406196028",
+        "ShareSize": 1250,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      },
+      {
+        "Name": "Priit Vaba",
+        "RegistryCodeOrID": "39205110208",
+        "ShareSize": 1250,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      }
+    ]
+  },
+  {
+    "CompanyName": "Kullaparadiis OÜ",
+    "RegistrationCode": "1002590",
+    "DateOfEstablishment": "1996-11-11",
+    "TotalCapital": 429478,
+    "Shareholders": [
+      {
+        "Name": "Timo Ronk",
+        "RegistryCodeOrID": "37912240025",
+        "ShareSize": 233078,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      },
+      {
+        "Name": "Ants Ronk",
+        "RegistryCodeOrID": "38202140825",
+        "ShareSize": 100200,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "OSANIK"
+      },
+      {
+        "Name": "Juhan Villing",
+        "RegistryCodeOrID": "38212110825",
+        "ShareSize": 96200,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      }
+    ]
+  },
+  {
+    "CompanyName": "BLAM CC OÜ",
+    "RegistrationCode": "1211286",
+    "DateOfEstablishment": "2012-07-09",
+    "TotalCapital": 2500,
+    "Shareholders": [
+      {
+        "Name": "Sandra Sirel",
+        "RegistryCodeOrID": "49805301811",
+        "ShareSize": 2500,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      }
+    ]
+  },
+  {
+    "CompanyName": "Bergmeister OÜ",
+    "RegistrationCode": "1121176",
+    "DateOfEstablishment": "2015-01-21",
+    "TotalCapital": 5000,
+    "Shareholders": [
+      {
+        "Name": "Jakob Parm",
+        "RegistryCodeOrID": "37902176514",
+        "ShareSize": 5000,
+        "ShareholderType": "FÜÜSILINE",
+        "ShareholderStatus": "ASUTAJA"
+      }
+    ]
+  }
+]
+
