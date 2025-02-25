@@ -14,14 +14,16 @@
 - [Veebirakenduse tarkvara installeerimine](#veebirakenduse-tarkvara-installeerimine)
    * [Projekti kloonimine](#projekti-kloonimine)
    * [PostgreSQL installimine](#postgresql-installimine)
+         - [Django sisseehitatud admin paneel](#django-sisseehitatud-admin-paneel)
+         - [Kasutades pgAdmin rakendust](#kasutades-pgadmin-rakendust)
    * [Pythoni installimine](#pythoni-installimine)
    * [Venv keskkonna seadistamine](#venv-keskkonna-seadistamine)
 - [Veebirakenduse jooksutamine](#veebirakenduse-jooksutamine)
+      + [Andmebaasi automaatne täitmine](#andmebaasi-automaatne-täitmine)
 - [Veateated](#veateated)
 <!-- TOC end -->
 
 ## Kirjeldus
-
 Veebileht on loodud kasutades [Django](https://www.djangoproject.com/) koos [PostgreSql](https://www.postgresql.org/) andmebaasiga.
 
 Veebileht lubab kasutajal osaühinguid __asutada__, __otsida__ ning __andmeid vaadata__.
@@ -32,47 +34,47 @@ Veebirakendus ise asub kaustas `companyApp` ning kõik Djangoga seotud konfigura
 #### config kaust
 Veebirakendusel puudub Django klassikaline `settings.py` file ning see on asendatud 3 failiga kaustas `config/django/`.
 - `base.py`
-	- Django `settings.py` baas seaded mis kehtivad olenemata mis keskkonnas rakendus jooksutatakse: kas **lokaalselt** või **productionis**
+    - Django `settings.py` baas seaded mis kehtivad olenemata mis keskkonnas rakendus jooksutatakse: kas **lokaalselt** või **productionis**
 - `local.py`
-	- Django seadeid üle kirjutav fail mis konfigureerib seaded lokaalseks arenduseks ja testimiseks.
+    - Django seadeid üle kirjutav fail mis konfigureerib seaded lokaalseks arenduseks ja testimiseks.
 - `production.py`
-	- Django baasseadeid üle kirjutav fail mis konfigureerib seaded production serveri jaoks, põhiliselt eemaldades `debug` mode ja nõuab [HTTPS](https://en.wikipedia.org/wiki/HTTPS) protokolli ja seadistab [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) seaded.
+    - Django baasseadeid üle kirjutav fail mis konfigureerib seaded production serveri jaoks, põhiliselt eemaldades `debug` mode ja nõuab [HTTPS](https://en.wikipedia.org/wiki/HTTPS) protokolli ja seadistab [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) seaded.
 
 #### companyApp
-Veebirakenduse enda failid asuvad kõik oma appis `companyApp`. 
+Veebirakenduse enda failid asuvad kõik oma appis `companyApp`.
 + `migrations/`
-	+ Kaust kus kõik andmebaasi muudatused kirjas. 
+    + Kaust kus kõik andmebaasi muudatused kirjas.
 + `static/`
-	+ Kaust kus asub rakenduse CSS fail.
+    + Kaust kus asub rakenduse CSS fail.
 + `templates/`
-	+ `base/`
-		+ Rakenduse baas HTML fail mille peale kõik ülejäänud failid oma koodi kirjutavad.
-	+ Kõik veebirakenduse HTML failid asuvad `templates` kaustas.
+    + `base/`
+        + Rakenduse baas HTML fail mille peale kõik ülejäänud failid oma koodi kirjutavad.
+    + Kõik veebirakenduse HTML failid asuvad `templates` kaustas.
 + `forms.py`
-	+ companyApp vormid mida HTML failid kasutavad ja mille põhjal andmed andmebaasi salvestatakse
+    + companyApp vormid mida HTML failid kasutavad ja mille põhjal andmed andmebaasi salvestatakse
 + `models.py`
-	+ Rakenduse mudelite kaust kust defineeritakse kuidas ja mis andmeid andmebaasi salvestada
+    + Rakenduse mudelite kaust kust defineeritakse kuidas ja mis andmeid andmebaasi salvestada
 + `urls.py`
-	+ Rakenduses kasutatavad URL andmed
+    + Rakenduses kasutatavad URL andmed
 + `views.py`
-	+ Front-endi poolt kasutatavad Pythonis kirjutatud meetodid.
+    + Front-endi poolt kasutatavad Pythonis kirjutatud meetodid.
 
 ### Avaleht
 Avalehel näeb kõiki andmebaasi lisatuid firmasid: nende ___nimesid___, ___registrikoode___ ja kes on selle firma ___osanikud___.
 
-Otsinguga saab otsida **osaühinguid** või **osanikke** nime, registrikoodi või isikukoodi alusel. 
+Otsinguga saab otsida **osaühinguid** või **osanikke** nime, registrikoodi või isikukoodi alusel.
 Alustades otsingut klikates nuppu `Otsi` või vajutades klahvile `Enter` filtreeritakse alumises tabelis kõik firmad välja arvatud mis vastasid otsingu tulemusele.
 
 Otsingu funktsioon ei ole dünaamiline ega kasuta Javascripti, et realajas filtreerida vaid alles siis jooksutab koodi kui kasutaja spetsiifiliselt vajutab `Otsi`.
 
 #### Osaühingute tabel
-Osaühingute tabelis on 3 tulpa: 
+Osaühingute tabelis on 3 tulpa:
 + ___osaühingu nimi___
-	+ Osaühingu nimi millele klikates avatakse osaühingu andmete vaade.
+    + Osaühingu nimi millele klikates avatakse osaühingu andmete vaade.
 + ___osaühingu registrikood___
-	+ Osaühingu salvestatud registrikood.
+    + Osaühingu salvestatud registrikood.
 + ___osaühingu osanikud___
-	+ Kõik osanikud kes on osaühinguga seotud.
+    + Kõik osanikud kes on osaühinguga seotud.
 
 #### Lisa Uus Osaühing
 Klikates nupule `Lisa uus Osaühing` navigeeritakse kasutaja uuele vaatele kus täpsemalt saab lugeda siit.
@@ -86,29 +88,28 @@ Iga osaühingu kohta näeb selle ___registrikoodi___, ___asutamise kuupäeva (dd
 
 Igal osaühingul on Osanikud välja toodud tabeli näol, kust näeb:
 + **Osanike tüüp**
-	+ Kas tegu on Juriidilise või füüsilise osanikuga
+    + Kas tegu on Juriidilise või füüsilise osanikuga
 + **Osaniku nimi**
-	+ Kas juriidilise firma või füüsilise isiku nimi.
+    + Kas juriidilise firma või füüsilise isiku nimi.
 + **Osaniku registri- või isikukood**
-	+ Olenevalt osaniku tüübist.
+    + Olenevalt osaniku tüübist.
 + **Osaniku suurus (€)**
-	+ Osaniku suurus osaühingus.
+    + Osaniku suurus osaühingus.
 + **Osaniku staatus**
-	+ Kas tegu on ainu asutajaga, üks asutajatest või hiljem lisatud osanik.
-
+    + Kas tegu on ainu asutajaga, üks asutajatest või hiljem lisatud osanik.
 
 ### Osaühingu asutamise vorm
 Osaühingu asutamise vormil saab teha järgnevaid tegevusi.
 + Lisada uus osaühing
-	+ Täpsemalt saab lugeda [siit]
+    + Täpsemalt saab lugeda [siit](#lisa-uus-osaühing)
 + Lisada osaühingu asutajad
-	+ Täpsemalt saab lugeda [siit]
+    + Täpsemalt saab lugeda [Lisa Asutajad](#Lisa%20Asutajad)
 + Lisada uus asutaja vorm
-	+ Täpsemalt saab lugeda [siit]
+    + Täpsemalt saab lugeda [[#lisa uu]]
 + Salvestada osaühing ja osaniku
-	+ Saadab Django Back-endile informatsiooni uuest Osaühingust ning sellega seotud asutajatest. Django salvestab informatsiooni PostgreSQL andmebaasi.
+    + Saadab Django Back-endile informatsiooni uuest Osaühingust ning sellega seotud asutajatest. Django salvestab informatsiooni PostgreSQL andmebaasi.
 + Navigeerida tagasi avalehele
-	+ Ei salvesta muudatusi ning navigeerib tagasi avalehele.
+    + Ei salvesta muudatusi ning navigeerib tagasi avalehele.
 
 
 #### Lisa uus Osaühing
@@ -116,11 +117,11 @@ Osaühingu asutamise vormil tuleb täita iga osaühingu kohta selle ___nimi___, 
 
 Osaühingu nimi peab olema 3-100 tähemärki ning seda kontrollib järgmine regex:
 - **[\p{L}\p{N}\p{P}\p{Zs}]{3,100}**
-	- - **\p{L}** → Vastab tähtedele mis tahes keeles (A-Z, ä, ö, ü, ß, jne.).
-	- **\p{N}** → Vastab numbritele (0-9, jne.).
-	- **\p{P}** → Vastab kirjavahemärkidele (.,!?(){} jne.).
-	- **\p{Zs}** → Vastab tühikutega seotud märkidele (tühikud, mittemurdvad tühikud jne.).
-	- **{3,100}** → Nõuab, et nimi oleks vahemikus 3 kuni 100 tähemärki.
+    - - **\p{L}** → Vastab tähtedele mis tahes keeles (A-Z, ä, ö, ü, ß, jne.).
+    - **\p{N}** → Vastab numbritele (0-9, jne.).
+    - **\p{P}** → Vastab kirjavahemärkidele (.,!?(){} jne.).
+    - **\p{Zs}** → Vastab tühikutega seotud märkidele (tühikud, mittemurdvad tühikud jne.).
+    - **{3,100}** → Nõuab, et nimi oleks vahemikus 3 kuni 100 tähemärki.
 
 Osaühingu registrikood peab olema täpselt 7 tähemärki pikk ning veebirakendus ei luba üle selle lisada. Juhul kui kasutaja lisab vähem kui 7 numbrit tuleb veateade ette.
 
@@ -129,11 +130,11 @@ Osaühingu asutamise kuupäeva puhul kasutab browserite sisseehitatud kuupäeva 
 Osaühingu kogukapitalil on kontroll kas see on vähemalt 2500 €.
 
 #### Lisa Asutajad
-Pärast osaühingu asutamise vormi asub asutajate lisamise vorm. 
-Vormi kohal on olemas otsing mis töötab dünaamiliselt ning realajas otsib firmasid ning isikuid sisestades vähemalt 3 tähemärki. 
+Pärast osaühingu asutamise vormi asub asutajate lisamise vorm.
+Vormi kohal on olemas otsing mis töötab dünaamiliselt ning realajas otsib firmasid ning isikuid sisestades vähemalt 3 tähemärki.
 
-Identselt avalehe otsingule saab otsida  **osaühinguid** või **osanikke** nime, registrikoodi või isikukoodi alusel. 
-Klikates otsingu tulemusel leitud nimele täidetakse alumine vorm füüsilise isiku või juriidilise firma andmetega kasutaja eest. 
+Identselt avalehe otsingule saab otsida  **osaühinguid** või **osanikke** nime, registrikoodi või isikukoodi alusel.
+Klikates otsingu tulemusel leitud nimele täidetakse alumine vorm füüsilise isiku või juriidilise firma andmetega kasutaja eest.
 
 Vaikimisi on Asutaja staatus märgitud kui **Asutaja**. Juhul kui lisatakse uus asutaja kas läbi otsingu või klikates nupule `Lisa uus asutaja vorm` muudetakse staatus ära `üks asutajatest`.
 
@@ -141,23 +142,49 @@ Soovi korral saab vormi kustutata kasutaja kliendilt. Iga vormi üleval paremal 
 
 Kõige viimast vormi ei saa kustudata.
 
-Esimene vorm saadakse Pythoni back-endist ning edaspidi majandab vormidega Javascript kliendi browseris. Lisades uus vorm kloonib javascript esimese vormi ning loob sellele uue elemendi. 
+Esimene vorm saadakse Pythoni back-endist ning edaspidi majandab vormidega Javascript kliendi browseris. Lisades uus vorm kloonib javascript esimese vormi ning loob sellele uue elemendi.
 See lahendus tähendab, et kasutaja veebileht ei pea konstantselt serverilt küsima uut vormi vaid ainult korra navigeerides saadab server uue vormi malli.
 
 ## Veebirakenduse tarkvara installeerimine
 ### Projekti kloonimine
-Projekti lokaalseks jooksmiseks tuleb kõigepealt projekt kloonida oma arvutisse. 
+Projekti lokaalseks jooksmiseks tuleb kõigepealt projekt kloonida oma arvutisse.
 Lähemalt saab selle kohta lugeda [GitHub guides veebilehelt](https://github.com/git-guides/git-clone)
 
-
 ### PostgreSQL installimine
-Projekt loodi [PostgreSQL](https://www.postgresql.org/) andmebaasi kasutamisega. 
+Projekt loodi [PostgreSQL](https://www.postgresql.org/) andmebaasi kasutamisega.
 Selleks, et projekti jooksutada lokaalselt peab olema PostgreSQL installitud, vastasel juhul rakendus ei jookse.
 
 PostgreSQL installimis asukoha võib suvaliselt valida kus soovite, aga meelde tuleb jätta järgnevad seadistused:
 + kasutajanimi (vaikimisi **postgres**)
 + port (vaikimisi **5432**)
 + parool - kasutaja enda määrata
+
+Kui andmebaas on seadistatud peaks kõige viimasena nätama järgnevat informatsiooni:
+```output
+Installation Directory: C:\Program Files\PostgreSQL\17
+Server Installation Directory: C:\Program Files\PostgreSQL\17
+Data Directory: C:\Program Files\PostgreSQL\17\data
+Database Port: 5432
+Database Superuser: postgres
+Operating System Account: NT AUTHORITY\NetworkService
+Database Service: postgresql-x64-17
+Command Line Tools Installation Directory: C:\Program Files\PostgreSQL\17
+pgAdmin4 Installation Directory: C:\Program Files\PostgreSQL\17\pgAdmin 4
+Installation Log: C:\Users\rasmu\AppData\Local\Temp\install-postgresql.log
+```
+
+Andmebaasi on veebirakenduse väliselt võimalik hallata kahel viisil. 
+1. Kasutades Django sisseehitatud admin paneeli
+2. Installides [pgAdmin](https://www.pgadmin.org/) rakenduse
+
+##### Django sisseehitatud admin paneel
+Pärast [Veebirakenduse jooksutamine](#Veebirakenduse%20jooksutamine) ja [Andmebaasi automaatne täitmine](#Andmebaasi%20automaatne%20täitmine) navigeerides veebilehele http://127.0.0.1:8000/admin/ peaks `COMPANYAPP` sektsioonis olema **Companys** ja **Shareholders** kust saab andmebaasi andmeid lihtsalt ja mugavalt muuta.
+
+##### Kasutades pgAdmin rakendust
+pgAdmin rakendus on üleüldine ning väga hea lahendus postgreSQL andmebaaside haldamiseks. 
+Selle kasutamiseks tuleb rakendus eelnevalt arvutisse [installida](https://www.pgadmin.org/download/) ning ühendada oma värskelt loodud `localhost` andmebaasiga.
+
+pgAdmin lubab kasutada SQL käsklusi, et andmebaase lugeda, manipuleerida ning lihtsalt manuaalselt uusi sisenedeid lisada.
 
 ### Pythoni installimine
 Veebirakenduse lokaalseks jooksmiseks tuleb kõigepealt alla laadida [Python](https://www.python.org/downloads/). Rakenduses kasutati Python versioon **3.12.7**, mis esmakordselt väljastati 2023-10-24 ja mille tugi lõpetatakse 2028-10.
@@ -171,7 +198,7 @@ Vastuseks peaks tulema installitud Pythoni versioon.
 Juhul kui Python pole installitud tuleks see alla laadida [siit](https://www.python.org/downloads/)
 
 ### Venv keskkonna seadistamine
-Pythonit kasutades on rangelt soovituslik igale projektile uus keskkond luua. 
+Pythonit kasutades on rangelt soovituslik igale projektile uus keskkond luua.
 Kui projekt on kloonitud navigeeri konsooliga (nt [powershell](https://learn.microsoft.com/en-us/powershell/)) projekti kausta ning loo uus **venv** keskkond.
 
 Täpsemalt saab virtuaal keskkondadest lugeda [Python dokumentatsioonist](https://docs.python.org/3/tutorial/venv.html)
@@ -182,7 +209,6 @@ python -m venv venv-osauhingud
 ```
 Viimane käsklus loob hetkel asuvasse kausta uue kausta nimega `venv-osauhingud` ning seejärel tuleb see aktiveerida järgneva käsklusega
 
-Windowsi arvutis:
 ```shell
 .\env_osauhingud\Scripts\activate
 ```
@@ -193,7 +219,7 @@ Järgnevalt navigeeri kloonitud GitHub projekti kausta (juhul kui juba ei asu se
 ```shell
 python -m pip install -r requirements.txt
 ```
-
+  
 
 ## Veebirakenduse jooksutamine
 Enne rakenduse jooksutamist tuleb seadistada keskkonna parameetrid.
@@ -203,40 +229,41 @@ Navigeeri kloonitud projekti juur kausta ning loo sinna uus fail:
 ```powershell
 New-Item .env
 ```
+
 Pärast käskluse jooksutamist peaks tulema järgnev teade:
 ```PowerShell
 ╰─ New-Item .TEST
+		
+        Directory: C:\Projects\osauhingud\osauhingud
 
-        Directory: C:\Projects\osauhingud\osauhingud
-
-
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
--a---        24/02/2025     13:38              0   .env
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a---        24/02/2025     13:38              0   .env
 ```
-
+  
 Lisaks seda saab kontrollida järgneva käsklusega PowerShellis:
 ```PowerShell
 ╰─ dir
 
-        Directory: C:\Projects\osauhingud\osauhingud
+        Directory: C:\Projects\osauhingud\osauhingud
+  
 
-
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
-d----        24/02/2025     11:28                  companyApp
-d----        19/02/2025     11:10                  config
--a---        18/02/2025     18:12            259   .env
--a---        19/02/2025     11:10           1990   .gitignore
--a---        18/02/2025     18:24            764   manage.py
--a---        18/02/2025     17:22              0 󰪷  README.md
--a---        18/02/2025     18:03            154 󰈙  requirements.txt
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d----        24/02/2025     11:28                  companyApp
+d----        19/02/2025     11:10                  config
+-a---        18/02/2025     18:12            259   .env
+-a---        19/02/2025     11:10           1990   .gitignore
+-a---        18/02/2025     18:24            764   manage.py
+-a---        18/02/2025     17:22              0 󰪷  README.md
+-a---        18/02/2025     18:03            154 󰈙  requirements.txt
 ```
 
 Kui `.env` on edukalt installitud avada see endale sobiliku programmiga ([Vim](https://www.vim.org/), [Vs Code](, https://code.visualstudio.com/), [Notepad](https://apps.microsoft.com/detail/9msmlrh6lzf3?hl=en-us&gl=US)) kas läbi konsooli või läbi File Explorer'i.
 
 `.env` faili tuleb järgmised read lisada
 ```
+
 # Defineerib, et rakendusele kehtivad lokaalse arenduse reeglid.
 DJANGO_SETTINGS_MODULE='config.django.local'
 
@@ -256,7 +283,7 @@ POSTGRESQL_USER=postgres
 POSTGRESQL_PASSWORD=
 ```
 
-Ainult viimased 3 rida tuleb täita eelnevalt [PostgreSQL seadistamisel]() valitud seadetega. 
+Ainult viimased 3 rida tuleb täita eelnevalt [PostgreSQL seadistamisel]() valitud seadetega.
 - `POSTGRESQL_NAME` - andmebaasi nimi, vaikimisi seadistatud **postgres**
 - `POSTGRESQL_USER` - andmebaasi kasutajanimi mis installeerides valisid
 - `POSTGRESQL_PASSWORD` - andmebaasi parool mis installeerides seadistasid.
@@ -273,32 +300,31 @@ Enne andmebaasi laadimist tuleb veenduda, et Django projekt jookseb.
 
 Andmebaasi näidis asub failis `exampleData.json` ning selle PostgreSQL andmebaasi laadimiseks tuleb jooksutada käsklus
 ```powerShell
-python manage.py load_initial_data
+python manage.py importData
 ```
-
 Scripti jooksutades logib konsooli kas andmed said edukalt faili lisatud või mitte.
 
 Kui script lõpetab, jooksutades uuesti veebirakenduse peaksid andmebaasi andmed sisestatud olema.
 
-
 ## Veateated
-Kõige tõenäolisemad veateated tekivad andmebaasist seotud probleemidega. 
-Juhul kui Django ei leia andmebaasi vastavalt `.env` faili lisatud infole ütleb konsooli tekkinud veateade selle otse viimasel real välja. 
+Kõige tõenäolisemad veateated tekivad andmebaasist seotud probleemidega.
+Juhul kui Django ei leia andmebaasi vastavalt `.env` faili lisatud infole ütleb konsooli tekkinud veateade selle otse viimasel real välja.
 Näiteks kui puudub andmebaasi **nimi**, **kasutaja** või **parool** on veateade umbes selline:
 ```powerShell
-  File "C:\Projects\osauhingud\env_osauhingud\Lib\site-packages\environ\environ.py", line 413, in get_value
-    raise ImproperlyConfigured(error_msg) from exc
+  File "C:\Projects\osauhingud\env_osauhingud\Lib\site-packages\environ\environ.py", line 413, in get_value
+    raise ImproperlyConfigured(error_msg) from exc
+
 django.core.exceptions.ImproperlyConfigured: Set the POSTGRESQL_USER environment variable
 ```
 
 Kui konsool näitab järgnevat veateadet:
 ```powerShell
-django.db.utils.OperationalError: connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgresS"
+django.db.utils.OperationalError: connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgresS"
 ```
 võib see tähendada, et kas andmebaasi kasutajanimi või parool on vale. Hetke näites on andmebaasi kasutajanimele lisatud lisa `S`.
 
 Kui andmebaasi nimi on valesti kirjutatud ning Django seda ei leia tuleb järgnev veateade:
 ```powerShell
-django.db.utils.OperationalError: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "postgresD" does not exist
+django.db.utils.OperationalError: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "postgresD" does not exist
 ```
 Andmebaasi nime lõppu on lisatud lisa `D` mille tulemusena Django DB utils esitab veateate, et sellist andmebaasi ei leidnud.
